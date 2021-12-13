@@ -1,9 +1,8 @@
 package com.example.bflmultipleimages
 
-import android.app.Activity
+
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
@@ -32,48 +31,9 @@ class MultimageAdapter(var context: Context, var list: MutableList<String>?) :
         holder.ivList.setImageBitmap(bitmap)
         Log.e("##All Items ",TextUtils.join(",", list!!))
         val imageListActivity = context as ImageListActivity
-        imageListActivity.btnDel!!.setOnClickListener {
-            list?.removeAt(position)
-            val joined = TextUtils.join(",", list!!)
-            Log.e("##Remove Items ",joined)
-            MyUtility.putStringInPreferences((context as Activity), joined,"favorites")
-            //                SharedPref.save((Activity) context,"pqrs",joined);
-            //                String path=Environment.getExternalStoragePublicDirectory(
-            //                        Environment.DIRECTORY_DOWNLOADS)+ "/Compress Image/";
-            //                File file=new File(data);
-            //                String filename= file.getName();
-            //                String finalPath=path+filename;
-            //
-            //
-            //
-            //                SharedPref.clearData((Activity) context,"pqrs");
-            ////                delete(context, new File(data));
-            //                Log.e("##File Path ",path+"\n"+filename+"\n"+finalPath);
-            //
-            //
-            //                if (delete(context, new File(finalPath))){
-            //                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
-            //                }else{
-            //                    Toast.makeText(context, "Not Deleted", Toast.LENGTH_SHORT).show();
-            //                }
-        }
+
         holder.ivList.setOnClickListener {
-//            Utils.showExpandableImage(context, data, holder.ivList, list, position)
-            val path =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    .toString() + "/ScanImage/"
-            val file = File(data)
-            val filename = file.name
-            val finalPath = path + filename
-            val fdelete = File(finalPath)
-            Log.e("#file :", finalPath)
-            if (fdelete.exists()) {
-                if (fdelete.delete()) {
-                    Log.e("#file Deleted :", finalPath)
-                } else {
-                    Log.e("#file not Deleted :", finalPath)
-                }
-            }
+            Utils.showExpandableImage(context, data, holder.ivList, list, position)
         }
     }
 
@@ -82,15 +42,10 @@ class MultimageAdapter(var context: Context, var list: MutableList<String>?) :
     }
 
     inner class MultiImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivList: ImageView
-        var imageView: ImageView
-        var cardContainer: CardView
+        var ivList: ImageView = itemView.findViewById(R.id.ivList)
+        var imageView: ImageView = itemView.findViewById(R.id.expanded_image)
+        var cardContainer: CardView = itemView.findViewById(R.id.cardContainer)
 
-        init {
-            ivList = itemView.findViewById(R.id.ivList)
-            imageView = itemView.findViewById(R.id.expanded_image)
-            cardContainer = itemView.findViewById(R.id.cardContainer)
-        }
     }
 
     companion object {

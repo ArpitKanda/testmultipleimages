@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
-
 android {
     compileSdk 31
     defaultConfig {
@@ -52,13 +51,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation "com.google.firebase:firebase-core:$FIREBASE_VERSION"
+    //noinspection OutdatedLibrary
     implementation "com.google.firebase:firebase-ml-vision:$FIREBASE_VERSION"
-
-
     implementation 'com.google.code.gson:gson:2.8.7'
-
     implementation 'pub.devrel:easypermissions:2.0.1'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 apply plugin: 'com.google.gms.google-services'
+
+//sagar raj p
+//vivek hajari

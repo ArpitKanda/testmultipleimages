@@ -47,7 +47,6 @@ class MultiImageActivity : AppCompatActivity() {
         btnAdd!!.setOnClickListener { checkPermission() }
         btnPdf!!.setOnClickListener {
             if ((bitmapList as ArrayList<Bitmap?>).size > 0) {
-//                SharedPref.setArray(context, "bitmap", bitmapList)
                 startActivity(Intent(context, ImageListActivity::class.java))
             }
         }

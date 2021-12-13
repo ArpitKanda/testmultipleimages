@@ -47,8 +47,10 @@
         android:id="@+id/iv_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitXY"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_baseline_image_24"
+       />
 
 
 </LinearLayout>

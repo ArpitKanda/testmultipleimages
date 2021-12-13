@@ -152,7 +152,7 @@ object ImageCompress {
             return file.absolutePath + "/" + System.currentTimeMillis() + ".jpg"
         }
 
-    fun getRealPathFromURI(context: Context, contentURI: Uri): String? {
+    private fun getRealPathFromURI(context: Context, contentURI: Uri): String? {
         val cursor = context.contentResolver.query(contentURI, null, null, null, null)
         return if (cursor == null) {
             contentURI.path
@@ -163,7 +163,7 @@ object ImageCompress {
         }
     }
 
-    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         val height = options.outHeight
         val width = options.outWidth
         var inSampleSize = 1
@@ -193,8 +193,7 @@ object ImageCompress {
             }
         }
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val mediaFile: File
-        mediaFile = if (type == 1) {
+        val mediaFile: File = if (type == 1) {
             File(
                 mediaStorageDir.path + File.separator +
                         "IMG_" + timeStamp + ".jpg"

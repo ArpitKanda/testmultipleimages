@@ -13,5 +13,9 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+        //add methods
+        //n1+n2=C
+        //1+2=3
+        //C=3
     }
 }

@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:orientation="vertical">
-    <ImageView
+    <com.example.bflmultipleimages.TouchImageView
         android:id="@+id/ivDoc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="matrix"
+        android:elevation="-1dp"
         android:layout_above="@+id/btnDelte"
+        android:clickable="true"
         android:src="@android:color/transparent" />
     <Button
         android:id="@+id/btnDelte"

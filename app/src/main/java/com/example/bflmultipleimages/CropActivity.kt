@@ -26,6 +26,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+
 class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     var ivCrop: CropImageView? = null
     var btnCancel: Button? = null
@@ -34,6 +35,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     var mCroppedFile: File? = null
     var tempFile: File? = null
     var imgRoted:ImageView?=null
+
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
@@ -51,14 +53,10 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             finish()
         }
         btnOk?.setOnClickListener {
-            if (ivCrop!!?.canRightCrop()) {
+            if (ivCrop!!.canRightCrop()) {
                 val crop: Bitmap = ivCrop!!.crop()
-                if (crop != null) {
-                    mCroppedFile?.let { saveImage(crop, it) }
-                    setResult(Activity.RESULT_OK)
-                } else {
-                    setResult(Activity.RESULT_CANCELED)
-                }
+                mCroppedFile?.let { saveImage(crop, it) }
+                setResult(Activity.RESULT_OK)
                 finish()
             } else {
                 Toast.makeText(this@CropActivity, "cannot crop correctly", Toast.LENGTH_SHORT)
@@ -139,7 +137,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             return
         }
         var selectedBitmap: Bitmap? = null
-        if (requestCode == REQUEST_CODE_TAKE_PHOTO && tempFile!!?.exists()) {
+        if (requestCode == REQUEST_CODE_TAKE_PHOTO && tempFile!!.exists()) {
             val options = BitmapFactory.Options()
             options.inJustDecodeBounds = true
             BitmapFactory.decodeFile(tempFile?.path, options)
@@ -166,7 +164,6 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             ivCrop?.setImageToCrop(selectedBitmap)
         }
     }
-
     private fun saveImage(bitmap: Bitmap, saveFile: File) {
         try {
             val fos = FileOutputStream(saveFile)

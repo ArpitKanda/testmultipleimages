@@ -26,8 +26,6 @@ import android.provider.MediaStore
 //import com.example.bflmultipleimages.imagepdf.SharedPref
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
-
-
 class MainActivity : AppCompatActivity() {
     var btnTake: Button? = null
     var btnSelect: Button? = null
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     var ivShow: ImageView? = null
     var photoFile: File? = null
     var imagePath:String?=null;
-    var count:Int?=null;
     private var bitmap_gray: Bitmap? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         btn_gray = findViewById(R.id.btn_gray)
         btnSelect = findViewById<View>(R.id.btn_select) as Button
         ivShow = findViewById<View>(R.id.iv_show) as ImageView
-
         btnTake!!.setOnClickListener {
             startActivityForResult(
                 CropActivity.getJumpIntent(
@@ -55,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                 ), 100
             )
         }
-
         btnSelect!!.setOnClickListener {
             startActivityForResult(
                 CropActivity.getJumpIntent(
@@ -64,31 +59,30 @@ class MainActivity : AppCompatActivity() {
                     photoFile
                 ), 100
             )
-
-
         }
-
         btn_gray?.setOnClickListener{
-            if(MyUtility.getStringFromPreferences(App.getContext(),null, "favorites")!=null && MyUtility.getStringFromPreferences(App.getContext(),null, "favorites")!!.isNotEmpty()) {
-            val intent = Intent(this, ImageListActivity::class.java)
-            startActivity(intent)
+            if(MyUtility.getFavoriteList(this)!=null && MyUtility.getFavoriteList(this)!!.isNotEmpty()) {
+                ivShow!!.setImageResource(R.drawable.ic_baseline_image_24)
+                val intent = Intent(this, ImageListActivity::class.java)
+                startActivity(intent)
             }else{
                 showToast("No Images Found")
             }
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 &&  photoFile!!.exists()) {
             val bitmap = BitmapFactory.decodeFile(photoFile?.path)
             bitmap_gray = bitmap
             ivShow?.setImageBitmap(bitmap_gray)
+            Log.e("##Saved ",photoFile?.path!!)
             MyUtility.addFavoriteItem(this,  photoFile!!.path)
             Log.e("##Photo Path ", Gson().toJson(MyUtility.getFavoriteList(this)).toString().substring(
                 2, Gson().toJson(
                     MyUtility.getFavoriteList(this)
                 ).toString().length - 2))
+
         }
     }
 
@@ -112,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
     private fun checkPermission() {
         val PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA,

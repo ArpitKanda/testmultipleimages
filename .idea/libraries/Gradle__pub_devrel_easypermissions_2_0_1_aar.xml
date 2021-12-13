@@ -4,6 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d87b13ae950963a5187a2a35f1464c6e/transformed/jetified-easypermissions-2.0.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d87b13ae950963a5187a2a35f1464c6e/transformed/jetified-easypermissions-2.0.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d87b13ae950963a5187a2a35f1464c6e/transformed/jetified-easypermissions-2.0.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7645c3438f52548d8b8452d6456ace04/transformed/jetified-easypermissions-2.0.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7645c3438f52548d8b8452d6456ace04/transformed/jetified-easypermissions-2.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7645c3438f52548d8b8452d6456ace04/transformed/jetified-easypermissions-2.0.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/pub.devrel/easypermissions/2.0.1/fa68c289527e5ac3275996766da4321c7c61d279/easypermissions-2.0.1-javadoc.jar!/" />

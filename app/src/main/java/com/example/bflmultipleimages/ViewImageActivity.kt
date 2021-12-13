@@ -13,7 +13,7 @@ import java.util.ArrayList
 
 class ViewImageActivity : AppCompatActivity() {
     private val context: Context? = null
-    private var ivDoc: ImageView? = null
+    private var ivDoc: TouchImageView? = null
     private var imagepath: String? = null
     var btnDelete: Button? = null
     var position = 0
@@ -41,7 +41,14 @@ class ViewImageActivity : AppCompatActivity() {
         btnDelete!!.setOnClickListener {
             `object`!!.removeAt(position)
             val joined = TextUtils.join(",", `object`)
-            MyUtility.putStringInPreferences(this, joined, "favorites")
+            if(joined.equals("")){
+                MyUtility.putStringInPreferences(this@ViewImageActivity, null, "favorites")
+            }else{
+                MyUtility.putStringInPreferences(this@ViewImageActivity, joined, "favorites")
+            }
+
+
+        finish()
         }
     }
 }
