@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btnDel">
+            <ImageView
+                android:id="@+id/expanded_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"/>
+        </FrameLayout>
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:text="Delete"
+            android:textAllCaps="false"/>
+    </RelativeLayout>
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llbutton"
+        android:orientation="vertical" />
+
+
+    <LinearLayout
+        android:id="@+id/llbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnCreatePdf"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_margin="10dp"
+            android:text="Genrate PDF"
+            android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btnCreateImage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:text="Genrate Image"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</RelativeLayout>
