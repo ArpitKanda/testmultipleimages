@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageMaskingActivity">
+    tools:context="com.scan.testmultipleimages.ImageMaskingActivity">
     <ImageView
         android:id="@+id/ivMask"
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:orientation="vertical">
-    <com.example.bflmultipleimages.TouchImageView
+    <com.scan.testmultipleimages.TouchImageView
         android:id="@+id/ivDoc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
