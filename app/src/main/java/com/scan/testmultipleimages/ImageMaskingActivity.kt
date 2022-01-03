@@ -1,5 +1,4 @@
 package com.scan.testmultipleimages
-
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -66,8 +65,6 @@ class ImageMaskingActivity : AppCompatActivity() {
             PERMISSION_REQUEST_CODE
         )
     }
-
-
     private fun checkPermission1(): Boolean {
         // checking of permissions.
         val permission1 =

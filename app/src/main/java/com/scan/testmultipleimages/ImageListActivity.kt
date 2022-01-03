@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.Button
@@ -32,13 +33,21 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+import android.content.Intent
+
+import android.provider.MediaStore
+
+import android.content.DialogInterface
+import android.net.Uri
 
 
 class ImageListActivity : AppCompatActivity() {
     var context: Context? = null
-    var mutliImageAdapter: MultimageAdapter? = null
     var recyclerViewImage: RecyclerView? = null
-    var btnCreatePdf: Button? = null
+    private var btnCreatePdf: Button? = null
+    var btnAddMore:Button?=null
     var llbutton:LinearLayout?=null
     var btnDel:Button?=null
     var btnCreateImage:Button?=null
@@ -47,7 +56,7 @@ class ImageListActivity : AppCompatActivity() {
     var shortAnimationDuration = 0
     var positionList: Int? =null
     var bitmaplist: MutableList<Bitmap> = java.util.ArrayList()
-    var list: MutableList<String>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +66,7 @@ class ImageListActivity : AppCompatActivity() {
         btnCreateImage=findViewById(R.id.btnCreateImage)
         recyclerViewImage = findViewById(R.id.recyclerViewImage)
         btnCreatePdf = findViewById(R.id.btnCreatePdf)
+        btnAddMore=findViewById(R.id.btnAddMore)
         llbutton=findViewById(R.id.llbutton)
         shortAnimationDuration = resources.getInteger(
             android.R.integer.config_shortAnimTime
@@ -89,6 +99,14 @@ class ImageListActivity : AppCompatActivity() {
         }
         }
 
+        //resigerty pdf
+        //naver bill
+        //uarmil aadhar card
+        ////bank pass book first pages
+        //2 photo
+        //form
+        //100*
+
         btnCreateImage?.setOnClickListener {
             val result = Bitmap.createBitmap(
                 bitmaplist[0]!!.width,
@@ -110,11 +128,67 @@ class ImageListActivity : AppCompatActivity() {
                 Log.e("##MultiImages ", e.toString())
             }
         }
-
         btnCreatePdf?.setOnClickListener(View.OnClickListener {
             createPDF()
         })
 
+        btnAddMore?.setOnClickListener {
+            finish()
+        }
+    }
+
+//    private fun selectImage() {
+//        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Add Photo!")
+//        builder.setItems(options) { dialog, item ->
+//            if (options[item] == "Take Photo") {
+//                startActivityForResult(
+//                    CropActivity.getJumpIntent(
+//                        this@MainActivity,
+//                        false,
+//                        photoFile
+//                    ), 100
+//                )
+//            } else if (options[item] == "Choose from Gallery") {
+//                val intent = Intent(
+//                    Intent.ACTION_PICK,
+//                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                )
+//                startActivityForResult(intent, 2)
+//            } else if (options[item] == "Cancel") {
+//                dialog.dismiss()
+//            }
+//        }
+//        builder.show()
+//    }
+
+
+    companion object{
+        var list: MutableList<String>? = null
+        var mutliImageAdapter: MultimageAdapter? = null
+        fun deleteImages(position: Int, context: ImageListActivity) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage("Remove Picture?")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Yes"){dialogInterface , which->
+                list?.removeAt(position)
+                val joined = TextUtils.join(",", list!!)
+                if(joined.equals("")){
+                    MyUtility.putStringInPreferences(context, null, "favorites")
+                    context.finish()
+                }else{
+                    MyUtility.putStringInPreferences(context, joined, "favorites")
+                }
+                mutliImageAdapter?.notifyDataSetChanged()
+            }
+            builder.setNegativeButton("No"){dialogInterface, which ->
+
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
     }
 
     override fun onResume() {
@@ -128,18 +202,15 @@ class ImageListActivity : AppCompatActivity() {
                     bitmaplist.add(BitmapFactory.decodeFile(bitmap))
 
             }
-
             val gridLayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             mutliImageAdapter = MultimageAdapter(context as ImageListActivity, list)
             recyclerViewImage?.layoutManager = gridLayoutManager
             recyclerViewImage?.adapter = mutliImageAdapter
             mutliImageAdapter!!.notifyDataSetChanged()
-
             if (list!!.size > 0) {
                 changePosition()
             }
-
         }else{
             recyclerViewImage=null
             mutliImageAdapter!!.notifyDataSetChanged()
@@ -158,18 +229,18 @@ class ImageListActivity : AppCompatActivity() {
             var reqW: Int
             reqW = width
             for (i in bitmaplist.indices) {
-                reqH = width * bitmaplist.get(i)!!.getHeight() / bitmaplist.get(i)!!.getWidth()
+                reqH = width * bitmaplist[i]!!.height / bitmaplist[i]!!.width
                 if (reqH < height) {
                 } else {
                     reqH = height
-                    reqW = height * bitmaplist.get(i)!!.getWidth() / bitmaplist.get(i)!!.getHeight()
+                    reqW = height * bitmaplist[i]!!.width / bitmaplist[i]!!.height
                 }
                 val pageInfo: PageInfo =
-                    PageInfo.Builder(bitmaplist.get(i)!!.getWidth(), bitmaplist.get(i)!!.getHeight(), 1)
+                    PageInfo.Builder(bitmaplist[i]!!.width, bitmaplist[i]!!.height, 1)
                         .create()
                 val page: PdfDocument.Page = document.startPage(pageInfo)
-                val canvas: Canvas = page.getCanvas()
-                canvas.drawBitmap((bitmaplist.get(i))!!, 0f, 0f, null)
+                val canvas: Canvas = page.canvas
+                canvas.drawBitmap((bitmaplist[i])!!, 0f, 0f, null)
                 document.finishPage(page)
             }
             val fos: FileOutputStream

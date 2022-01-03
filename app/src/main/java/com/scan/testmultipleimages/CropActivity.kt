@@ -27,7 +27,6 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-
 class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     var ivCrop: CropImageView? = null
     var btnCancel: Button? = null
@@ -47,7 +46,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
         imgRoted?.setOnClickListener {
             //ivCrop?.rotationX=90F
-            ivCrop?.rotation=90F
+            ivCrop?.rotation=180F
         }
         btnCancel?.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
@@ -71,7 +70,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             finish()
             return
         }
-        tempFile= Utils.getOutputMediaFile(1, "CropImages")
+        tempFile= Utils.getOutputMediaFile(1, ".")
 //        tempFile = File(getExternalFilesDir("img"), "temp.jpg")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             EasyPermissions.requestPermissions(

@@ -35,14 +35,19 @@ class MultimageAdapter(var context: Context, var list: MutableList<String>?) :
         holder.ivList.setOnClickListener {
             Utils.showExpandableImage(context, data, holder.ivList, list, position)
         }
-    }
 
+        holder.imgDelImages.setOnClickListener {
+
+            ImageListActivity.deleteImages(position, context as ImageListActivity)
+        }
+    }
     override fun getItemCount(): Int {
         return list!!.size
     }
 
     inner class MultiImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var ivList: ImageView = itemView.findViewById(R.id.ivList)
+        var imgDelImages :ImageView=itemView.findViewById(R.id.imgDelImages)
         var imageView: ImageView = itemView.findViewById(R.id.expanded_image)
         var cardContainer: CardView = itemView.findViewById(R.id.cardContainer)
 

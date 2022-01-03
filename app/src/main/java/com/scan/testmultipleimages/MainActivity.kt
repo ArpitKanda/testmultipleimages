@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        photoFile = Utils.getOutputMediaFile(1, "ScanImage")
+        photoFile = Utils.getOutputMediaFile(1, ".")
     }
 
     override fun onRequestPermissionsResult(
