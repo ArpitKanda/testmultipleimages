@@ -140,7 +140,7 @@ object ImageCompress {
         get() {
             val file = File(
                 Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS
+                    Environment.DIRECTORY_DOWNLOADS
                 ), "Compress Image"
             )
             if (!file.exists()) {

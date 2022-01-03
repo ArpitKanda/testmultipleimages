@@ -95,17 +95,8 @@ class ImageListActivity : AppCompatActivity() {
                         "favorites"
                     )
                 }
-
+            }
         }
-        }
-
-        //resigerty pdf
-        //naver bill
-        //uarmil aadhar card
-        ////bank pass book first pages
-        //2 photo
-        //form
-        //100*
 
         btnCreateImage?.setOnClickListener {
             val result = Bitmap.createBitmap(
@@ -123,6 +114,13 @@ class ImageListActivity : AppCompatActivity() {
                 os = FileOutputStream(ImageCompress.getOutputMediaFile(1))
                 result.compress(Bitmap.CompressFormat.JPEG, 100, os)
                 Toast.makeText(this@ImageListActivity, "Image Genrated", Toast.LENGTH_SHORT).show()
+                list?.clear()
+                MyUtility.putStringInPreferences(
+                    context as ImageListActivity,
+                    null,
+                    "favorites"
+                )
+                finish()
             } catch (e: IOException) {
                 e.printStackTrace()
                 Log.e("##MultiImages ", e.toString())

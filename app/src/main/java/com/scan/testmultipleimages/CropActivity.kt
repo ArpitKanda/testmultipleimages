@@ -83,6 +83,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         } else {
             selectPhoto()
         }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -163,6 +164,13 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         if (selectedBitmap != null) {
             ivCrop?.setImageToCrop(selectedBitmap)
         }
+        if (ivCrop!!.canRightCrop()) {
+
+        } else {
+            Toast.makeText(this@CropActivity, "cannot crop correctly", Toast.LENGTH_SHORT)
+                .show()
+        }
+
     }
     private fun saveImage(bitmap: Bitmap, saveFile: File) {
         try {
