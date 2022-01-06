@@ -18,7 +18,15 @@
             android:layout_height="200dp"
             android:scaleType="fitXY"
             android:src="@drawable/null_profile" />
+        <ImageView
+            android:id="@+id/imgDelImages"
+            android:layout_width="30dp"
+            android:layout_margin="2dp"
+            android:layout_gravity="center|bottom|right"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_height="30dp"/>
     </androidx.cardview.widget.CardView>
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -29,6 +37,7 @@
             android:layout_height="match_parent"
             android:visibility="invisible"
             android:contentDescription="Text@" />
+
 
     </FrameLayout>
 </RelativeLayout>

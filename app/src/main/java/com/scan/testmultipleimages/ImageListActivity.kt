@@ -41,8 +41,8 @@ import android.provider.MediaStore
 
 import android.content.DialogInterface
 import android.net.Uri
-
-
+import com.google.gson.Gson
+import kotlin.collections.ArrayList
 class ImageListActivity : AppCompatActivity() {
     var context: Context? = null
     var recyclerViewImage: RecyclerView? = null
@@ -56,8 +56,6 @@ class ImageListActivity : AppCompatActivity() {
     var shortAnimationDuration = 0
     var positionList: Int? =null
     var bitmaplist: MutableList<Bitmap> = java.util.ArrayList()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_iamge_list)
@@ -75,8 +73,6 @@ class ImageListActivity : AppCompatActivity() {
         if(list!=null && list!!.isNotEmpty()){
             list?.clear()
         }
-
-
         btnDel!!.setOnClickListener {
             if(positionList!=null ){
             positionList?.let { it1 -> list?.removeAt(it1) }
@@ -97,17 +93,39 @@ class ImageListActivity : AppCompatActivity() {
                 }
             }
         }
-
         btnCreateImage?.setOnClickListener {
+            val bitmapWidth = ArrayList<Int>()
+            val bitmapHeight = ArrayList<Int>()
+            if(bitmaplist!=null && bitmaplist.isNotEmpty()){
+                bitmaplist.forEach { it->
+                    bitmapWidth?.add(it.width)
+                    bitmapHeight?.add(it.height)
+                }
+
+            }
+            if(bitmapWidth!=null) {
+                Log.d("bitmapWidth",""+Gson().toJson(bitmapWidth))
+
+                val max = bitmapWidth.maxOrNull() ?: 0
+                var addBitMapHeight=bitmapHeight.sum()
+                Log.d("bitmapvalllll", "$max   $addBitMapHeight")
             val result = Bitmap.createBitmap(
-                bitmaplist[0]!!.width,
-                bitmaplist[0]!!.height * bitmaplist.size,
-                Bitmap.Config.ARGB_8888
+                     max,
+                     addBitMapHeight,
+                    Bitmap.Config.ARGB_8888
             )
             val paint = Paint()
             val canvas = Canvas(result)
+                var customHeight:Int=0
             for (i in bitmaplist.indices) {
-                    canvas.drawBitmap(bitmaplist[i]!!, 0f, (bitmaplist[0]!!.height * i+10).toFloat(), paint)
+                customHeight = if(i==0){
+                    0
+                }else{
+                    customHeight + bitmaplist[i-1].height
+                }
+                Log.d("custom height",""+customHeight)
+
+                    canvas.drawBitmap(bitmaplist[i]!!, 0f, (customHeight).toFloat(), paint)
             }
             var os: OutputStream? = null
             try {
@@ -121,15 +139,18 @@ class ImageListActivity : AppCompatActivity() {
                     "favorites"
                 )
                 finish()
+
             } catch (e: IOException) {
                 e.printStackTrace()
                 Log.e("##MultiImages ", e.toString())
+            }
+            }else{
+
             }
         }
         btnCreatePdf?.setOnClickListener(View.OnClickListener {
             createPDF()
         })
-
         btnAddMore?.setOnClickListener {
             finish()
         }

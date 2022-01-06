@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
@@ -35,7 +36,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     var mCroppedFile: File? = null
     var tempFile: File? = null
     var imgRoted:ImageView?=null
-
+    var globalBitmap: Bitmap? = null
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
@@ -43,10 +44,23 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         btnCancel = findViewById<View>(R.id.btn_cancel) as Button?
         btnOk = findViewById<View>(R.id.btn_ok) as Button?
         imgRoted=findViewById<View>(R.id.imgRoted) as ImageView?
-
+        var angle=0
         imgRoted?.setOnClickListener {
-            //ivCrop?.rotationX=90F
-            ivCrop?.rotation=180F
+            angle+=90;
+            val width = globalBitmap?.width
+            val height =globalBitmap?.height
+            val newWidth = ivCrop?.width
+            val newHeight = ivCrop?.height
+            val scaleWidth = newWidth!!/width!!
+            val scaleHeight = newHeight!!/height!!
+            val matrix = Matrix()
+            matrix.postScale(scaleWidth.toFloat(), scaleHeight.toFloat())
+            matrix.postRotate(angle.toFloat())
+            val resizedBitmap = Bitmap.createBitmap(globalBitmap!!, 0, 0, width, height, matrix, true)
+            val scale = matrix.mapRadius(1f) - matrix.mapRadius(0f)
+            ivCrop?.scaleY=scale
+            matrix.reset()
+            ivCrop?.setImageBitmap(resizedBitmap)
         }
         btnCancel?.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
@@ -70,7 +84,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             finish()
             return
         }
-        tempFile= Utils.getOutputMediaFile(1, ".")
+        tempFile= Utils.getOutputMediaFile(1, ".CropImage")
 //        tempFile = File(getExternalFilesDir("img"), "temp.jpg")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             EasyPermissions.requestPermissions(
@@ -163,6 +177,7 @@ class CropActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         }
         if (selectedBitmap != null) {
             ivCrop?.setImageToCrop(selectedBitmap)
+            globalBitmap=selectedBitmap
         }
         if (ivCrop!!.canRightCrop()) {
 

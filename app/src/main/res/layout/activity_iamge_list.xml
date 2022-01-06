@@ -53,12 +53,23 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btnAddMore"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_margin="10dp"
+            android:text="Add More"
+            android:textAllCaps="false"/>
+        <Button
             android:id="@+id/btnCreatePdf"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="50dp"
             android:textAlignment="center"
             android:textSize="14sp"
+            android:visibility="gone"
             android:layout_margin="10dp"
             android:text="Genrate PDF"
             android:textAllCaps="false"/>
